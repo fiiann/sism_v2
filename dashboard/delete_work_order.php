@@ -14,8 +14,8 @@
         $query = "TRUNCATE TABLE work_order";
         $result = $con->query( $query );
         echo 'Data petugas berhasil dihapus. <br />';
-            
-        echo '<a href="daftar_petugas.php"><button class="btn btn-info">Kembali ke Daftar Petugas</button></a>';
+
+        echo '<a href="index.php"><button class="btn btn-info">Kembali ke Dashboard</button></a>';
     ?>
 </body>
 </html>

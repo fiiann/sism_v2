@@ -57,12 +57,8 @@
 						<a href="#"><i class="fa fa-edit fa-2x"></i> Input Data<span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li><a href="input_pekerjaan.php">Pekerjaan</a></li>
-<<<<<<< HEAD
+
 							<li><a href="daftar_mekanik.php">Lihat Mekanik</a></li>
-							
-=======
-							<li><a href="tambah_mekanik.php">Tambah Mekanik</a></li>
->>>>>>> b5ce0f958d9603a8af66bb71ab8b3656b6b8c56a
 						</ul>
 					</li>
 					<li>
@@ -74,6 +70,16 @@
 							<li><a href="daftar_mekanik_crusher.php">Crusher</a></li>
 							<li><a href="hapus_exp.php">Hapus Experience</a></li>
 
+						</ul>
+					</li>
+					<li>
+						<a href="#"><i class="fa fa-edit fa-2x"></i> Sertifikasi<span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level">
+							<li><a href="input_sertifikasi.php">Input Sertifikasi</a></li>
+							<li><a href="riwayat_sertif_wheel.php">Riwayat Wheel</a></li>
+							<li><a href="riwayat_sertif_track.php">Riwayat Track</a></li>
+							<li><a href="riwayat_sertif_sse.php">Riwayat SSE</a></li>
+							<li><a href="riwayat_sertif_crusher.php">Riwayat Crusher</a></li>
 						</ul>
 					</li>';
 				}

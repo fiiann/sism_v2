@@ -22,7 +22,7 @@
 	$db=new mysqli($db_host, $db_username, $db_password, $db_database);
 // Assign the query
 // $query = " SELECT * FROM mekanik m INNER JOIN work_order w ON m.id_mekanik=w.mekanik1  WHERE id_mekanik='".$id_mekanik."'";
-	$query = "SELECT * FROM mekanik m INNER JOIN work_order w ON m.id_mekanik=w.mekanik1 INNER JOIN sub_section s ON w.id_sub=s.id_sub INNER JOIN main_job mj on mj.id_job=w.id_job INNER JOIN job_detail jd ON jd.id_jobdetail=w.id_detailjob WHERE w.mekanik1='".$id_mekanik."'";
+	$query = "SELECT * FROM mekanik m INNER JOIN work_order w ON m.id_mekanik=w.mekanik1 INNER JOIN component cp ON cp.kode_komponen=w.komponen INNER JOIN component_section cs ON cs.kode_komponen_s=w.komponen_s INNER JOIN group_part gp ON gp.kode_group=w.group_part INNER JOIN sub_section s ON w.id_sub=s.id_sub INNER JOIN main_job mj on mj.id_job=w.id_job INNER JOIN job_detail jd ON jd.id_jobdetail=w.id_detailjob WHERE w.mekanik1='".$id_mekanik."'";
 	// $queryDua = "SELECT count(mekanik1) as jumlah FROM work_order w WHERE id_mekanik='".$id_mekanik."'";
 	$result = $db->query($query);
 	// $resultDua = $db->query($queryDua);
@@ -40,6 +40,9 @@
 			<th>Unit</th>
 			<th>job</th>
 			<th>Detail Job</th>
+			<th>Komponen</th>
+			<th>Komponen Section</th>
+			<th>Group Part</th>
 			<th>Deskripsi</th>
 			<th>Tanggal</th>
 			<!-- <th>Exp</th> -->
@@ -57,10 +60,13 @@
 								echo "<td>".$row->nama_sub."</td>";
 								echo "<td>".$row->nama_job."</td>";
 								echo "<td>".$row->nama_detail."</td>";
+								echo "<td>".$row->nama_komponen."</td>";
+								echo "<td>".$row->nama_komponen_s."</td>";
+								echo "<td>".$row->nama_group."</td>";
 								echo "<td>".$row->deskripsi."</td>";
-								echo "<td align='center'>".$row->tanggal."</td>";
+								echo "<td align='center'>".$row->time."</td>";
 								// echo "<td>".$rowDua->jumlah."</td>";
-								echo "</tr>"; 
+								echo "</tr>";
 								$nama=$row->nama_mekanik;
 								$id=$row->id_mekanik;
 								// $idmekanik = $row->id_mekanik;
@@ -68,14 +74,14 @@
 							}
 							echo "<h4>Nama Mekanik : ".$nama."</h4>";
 							// echo "</br>";
-							echo "<h5>Kode Mekanik : ".$id."</h5>";			
+							echo "<h5>Kode Mekanik : ".$id."</h5>";
 				?>
 			</tr>
 		</tbody>
 	</table>
-	<?php 
+	<?php
 	mysqli_close($con);
-	
+
 ?>
 </body>
 </html>

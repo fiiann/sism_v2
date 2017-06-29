@@ -1,5 +1,5 @@
 	<!DOCTYPE html>
-	
+
 	<?php
 		//connect database
 		require_once('sidebar.php');
@@ -7,14 +7,17 @@
 		// require_once('db_login.php');
 		$db=new mysqli($db_host, $db_username, $db_password, $db_database);
 		$nama="";
-		
-		
+
+
 		if($db->connect_errno){
 			die("Could not connect to the database : <br/>". $db->connect_error);
 		}
-	
+
 		if (isset($_POST["submit"])){
 			$nama=$_POST['nama'];
+			$komponen=$_POST['komponen'];
+			$komponen_s=$_POST['komponen_s'];
+			$kode_job=$_POST['kode_job'];
 			$tanggal=$_POST['tanggal'];
 			$kategori=$_POST['kategori']; //section
 			$subkategori=$_POST['subkategori']; //unit
@@ -24,13 +27,45 @@
 			$mekanik2=$_POST['mekanik2'];
 			$mekanik3=$_POST['mekanik3'];
 			$mekanik4=$_POST['mekanik4'];
-		
+
 			$nama=test_input($_POST['nama']);
 			if($nama == ''){
 				$error_nama= "Nama harus diisi";
 				$valid_nama= FALSE;
 			} else{
 				$valid_nama= TRUE;
+			}
+
+			$komponen=test_input($_POST['komponen']);
+			if($komponen == ''){
+				$error_komponen= "Komponen harus diisi";
+				$valid_komponen= FALSE;
+			} else{
+				$valid_komponen= TRUE;
+			}
+
+			$komponen_s=test_input($_POST['komponen_s']);
+			if($komponen_s == ''){
+				$error_komponen_s= "Komponen section harus diisi";
+				$valid_komponen_s= FALSE;
+			} else{
+				$valid_komponen_s= TRUE;
+			}
+
+			$group_part=test_input($_POST['group_part']);
+			if($group_part == ''){
+				$error_group_part= "group_part harus diisi";
+				$valid_group_part= FALSE;
+			} else{
+				$valid_group_part= TRUE;
+			}
+
+			$kode_job=test_input($_POST['kode_job']);
+			if($kode_job == ''){
+				$error_kode_job= "Kode harus diisi";
+				$valid_kode_job= FALSE;
+			} else{
+				$valid_kode_job= TRUE;
 			}
 
 			$tanggal=test_input($_POST['tanggal']);
@@ -114,15 +149,19 @@
 			} else{
 				$valid_deskripsi= TRUE;
 			}
-			
+
 		}
-		
+
 		//update data barang ke database
-		if($valid_nama && $valid_tanggal && $valid_kategori && $valid_subkategori && $valid_job && $valid_detail && $valid_deskripsi && $valid_1 && $valid_2 && $valid_3 && $valid_4){
+		if($valid_nama && $valid_komponen && $valid_komponen_s && $valid_group_part && $valid_kode_job && $valid_kategori && $valid_subkategori && $valid_job && $valid_detail && $valid_deskripsi && $valid_1 && $valid_2 && $valid_3 && $valid_4){
 			//escape inputs data
 			$nama=$db->real_escape_string($nama);
-			$tanggal=$db->real_escape_string($tanggal);
+			// $tanggal=$db->real_escape_string($tanggal);
 			$kategori=$db->real_escape_string($kategori);
+			$komponen=$db->real_escape_string($komponen);
+			$komponen_s=$db->real_escape_string($komponen_s);
+			$group_part=$db->real_escape_string($group_part);
+			$kode_job=$db->real_escape_string($kode_job);
 			$subkategori=$db->real_escape_string($subkategori);
 			$job=$db->real_escape_string($job);
 			$detail=$db->real_escape_string($detail);
@@ -133,18 +172,18 @@
 			$deskripsi=$db->real_escape_string($deskripsi);
 			//asign a query
 			if ($mekanik3=="none" && $mekanik3=="none") {
-				$query1  = " INSERT INTO work_order (nowo, tanggal, id_section, id_sub, id_job, id_detailjob, mekanik1, deskripsi) 
-					 VALUES ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik1', '$deskripsi'), ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik2', '$deskripsi')";
+				$query1  = " INSERT INTO work_order (nowo, tanggal, id_section, id_sub, id_job, id_detailjob, mekanik1, deskripsi, komponen, komponen_s,group_part, kode_job)
+					 VALUES ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik1', '$deskripsi', '$komponen','$komponen_s','$group_part','$kode_job'), ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik2', '$deskripsi', '$komponen','$komponen_s','$group_part','$kode_job')";
 			}elseif ($mekanik4 == "none") {
-				$query1  = " INSERT INTO work_order (nowo, tanggal, id_section, id_sub, id_job, id_detailjob, mekanik1, deskripsi) 
-					 VALUES ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik1', '$deskripsi'), ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik2', '$deskripsi') , ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik3', '$deskripsi')";
+				$query1  = " INSERT INTO work_order (nowo, tanggal, id_section, id_sub, id_job, id_detailjob, mekanik1, deskripsi,komponen, komponen_s, kode_job,group_part)
+					 VALUES ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik1', '$deskripsi', '$komponen','$komponen_s','$kode_job','$group_part'), ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik2', '$deskripsi', '$komponen','$komponen_s','$kode_job','$group_part') , ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik3', '$deskripsi', '$komponen','$komponen_s','$kode_job','$group_part')";
 			}else{
-				$query1  = " INSERT INTO work_order (nowo, tanggal, id_section, id_sub, id_job, id_detailjob, mekanik1, deskripsi) 
-					 VALUES ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik1', '$deskripsi'), ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik2', '$deskripsi') , ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik3', '$deskripsi'), ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik4', '$deskripsi')";
+				$query1  = " INSERT INTO work_order (nowo, tanggal, id_section, id_sub, id_job, id_detailjob, mekanik1, deskripsi,komponen, komponen_s,group_part, kode_job)
+					 VALUES ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik1', '$deskripsi', '$komponen','$komponen_s','$group_part','$kode_job'), ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik2', '$deskripsi', '$komponen','$komponen_s','$group_part','$kode_job') , ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik3', '$deskripsi', '$komponen','$komponen_s','$group_part','$kode_job'), ('$nama','$tanggal','$kategori','$subkategori','$job','$detail','$mekanik4', '$deskripsi', '$komponen','$komponen_s','$group_part','$kode_job')";
 			}
-			
 
-	
+
+
 			$result1=$db->query($query1);
 			// $result2=$db->query($query2);
 			if(!($result1)){
@@ -160,7 +199,7 @@
 	?>
 	<html>
 		<head>
-			<script src="js/jquery.js" type="text/javascript"></script>  
+			<script src="js/jquery.js" type="text/javascript"></script>
 		</head>
 		<script>
 			$(document).ready(function() {
@@ -240,22 +279,22 @@
 			// 	});
 			// });
 
-			
+
 			</script>
 	<style>
 			html {
 				font-size: 50.5%;
-				
+
 			}
 			body {
-				
+
 				font-size: 2rem;
 				background-color:rgba(255,255,255,0.5);
 			}
 			.error{
 				color : #FF0000;
 			}
-		
+
 	</style>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -266,24 +305,24 @@
 		<div class="col-md-12">
 		<form method="POST" autocomplete="on" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 		<table>
-			
+
 			<tr>
 				<td class="form-group" valign="top">No WO</td>
 				<td valign="top">:&nbsp;&nbsp;</td>
-				<td valign="top"><input type="text" id="nama" name="nama" size="50" maxlength="100" 
+				<td valign="top"><input type="text" id="nama" name="nama" size="50" maxlength="100"
 				placeholder="Masukkan Nama (maximal 50 karakter)" required autofocus value="<?php echo $nama; ?>"></td>
 				<td valign="top"><span class="error">&nbsp;&nbsp;!<?php if(!empty($error_nama)) echo $error_nama; ?></span></td>
 			<!-- <tr><br></tr>> --><br>
 			<tr><td><br></td></tr>
 			</tr>
-			<tr>
+			<!-- <tr>
 				<td valign="top" class="form-group">Tanggal Pengerjaan</td>
 				<td valign="top">:</td>
-				<td valign="top"><input type="date" id="tanggal" name="tanggal" size="50" maxlength="100" 
+				<td valign="top"><input type="date" id="tanggal" name="tanggal" size="50" maxlength="100"
 				placeholder="ex : 2017-03-01" required autofocus</td>
 				<td valign="top"><span class="error">&nbsp;&nbsp;!<?php if(!empty($error_tanggal)) echo $error_tanggal; ?></span></td>
 			</tr>
-			<tr><td><br></td></tr>
+			<tr><td><br></td></tr> -->
 			<tr>
 				<td valign="top">Section</td>
 				<td valign="top">:</td>
@@ -295,14 +334,14 @@
 						if(!$resultkat){
 							die("Could not connect to the database : <br/>". $db->connect_error);
 						}
-						while ($row = $resultkat->fetch_object()){ 
-							$kid = $row->id_section; 
-							$kname = $row->nama_section; 
-							echo '<option value='.$kid.' '; 
+						while ($row = $resultkat->fetch_object()){
+							$kid = $row->id_section;
+							$kname = $row->nama_section;
+							echo '<option value='.$kid.' ';
 							if(isset($kategori) && $kategori==$kid)
 							echo 'selected="true"';
 							echo '>'.$kname.'<br/></option>';
-						} 
+						}
 					?></select>
 				</td>
 				<td valign="top"><span class="error">&nbsp;&nbsp;* <?php if(!empty($error_kategori)) echo $error_kategori; ?></span></td>
@@ -328,14 +367,14 @@
 						if(!$resultkat){
 							die("Could not connect to the database : <br/>". $db->connect_error);
 						}
-						while ($row = $resultkat->fetch_object()){ 
-							$kid = $row->id_job; 
-							$kname = $row->nama_job; 
-							echo '<option value='.$kid.' '; 
+						while ($row = $resultkat->fetch_object()){
+							$kid = $row->id_job;
+							$kname = $row->nama_job;
+							echo '<option value='.$kid.' ';
 							if(isset($job) && $job==$kid)
 							echo 'selected="true"';
 							echo '>'.$kname.'<br/></option>';
-						} 
+						}
 					?></select>
 				</td>
 				<td valign="top"><span class="error">&nbsp;&nbsp;* <?php if(!empty($error_kategori)) echo $error_kategori; ?></span></td>
@@ -349,7 +388,90 @@
 				</td>
 				<td valign="top"><span class="error">&nbsp;&nbsp; <?php if(!empty($error_subkategori)) echo $error_subkategori; ?></span></td>
 			</tr>
+
 			<tr><td><br></td></tr>
+			<tr>
+				<td valign="top">Component</td>
+				<td valign="top">:</td>
+				<td valign="top"><select id="komponen" name="komponen" required>
+					<option value="none">--Pilih Komponen--</option>
+					<?php
+						$querycom = "select * from component";
+						$resultcom = $db->query($querycom);
+						if(!$resultcom){
+							die("Could not connect to the database : <br/>". $db->connect_error);
+						}
+						while ($row = $resultcom->fetch_object()){
+							$mid1 = $row->kode_komponen;
+							$mname = $row->nama_komponen;
+							echo '<option value='.$mid1.' ';
+
+							echo '>'.$mname.'<br/></option>';
+						}
+					?></select>
+				</td>
+				<td valign="top"><span class="error">&nbsp;&nbsp; <?php if(!empty($error_komponen)) echo $error_komponen; ?></span></td>
+			</tr>
+			<tr><td><br></td></tr>
+
+			<tr>
+				<td valign="top">Component Section</td>
+				<td valign="top">:</td>
+				<td valign="top"><select id="komponen_s" name="komponen_s" required>
+					<option value="none">--Pilih Komponen Section--</option>
+					<?php
+						$querycom = "select * from component_section";
+						$resultcom = $db->query($querycom);
+						if(!$resultcom){
+							die("Could not connect to the database : <br/>". $db->connect_error);
+						}
+						while ($row = $resultcom->fetch_object()){
+							$mid1 = $row->kode_komponen_s;
+							$mname = $row->nama_komponen_s;
+							echo '<option value='.$mid1.' ';
+
+							echo '>'.$mname.'<br/></option>';
+						}
+					?></select>
+				</td>
+				<td valign="top"><span class="error">&nbsp;&nbsp; <?php if(!empty($error_komponen_s)) echo $error_komponen_s; ?></span></td>
+			</tr>
+			<tr><td><br></td></tr>
+
+
+			<tr>
+				<td valign="top">Group Part</td>
+				<td valign="top">:</td>
+				<td valign="top"><select id="group_part" name="group_part" required>
+					<option value="none">--Pilih Group Part--</option>
+					<?php
+						$querycom = "select * from group_part";
+						$resultcom = $db->query($querycom);
+						if(!$resultcom){
+							die("Could not connect to the database : <br/>". $db->connect_error);
+						}
+						while ($row = $resultcom->fetch_object()){
+							$mid1 = $row->kode_group;
+							$mname = $row->nama_group;
+							echo '<option value='.$mid1.' ';
+
+							echo '>'.$mname.'<br/></option>';
+						}
+					?></select>
+				</td>
+				<td valign="top"><span class="error">&nbsp;&nbsp; <?php if(!empty($error_subkategori)) echo $error_subkategori; ?></span></td>
+			</tr>
+			<tr><td><br></td></tr>
+
+			<tr>
+				<td valign="top" class="form-group">Kode Job</td>
+				<td valign="top">:</td>
+				<td valign="top"><input type="text" id="kode_job" name="kode_job" size="50" maxlength="100"
+				placeholder="Kode Job" required autofocus</td>
+				<td valign="top"><span class="error">&nbsp;&nbsp;!<?php if(!empty($error_kode_job)) echo $error_kode_job; ?></span></td>
+			</tr>
+			<tr><td><br></td></tr>
+
 			<tr>
 				<td valign="top">Mekanik 1</td>
 				<td valign="top">:</td>
@@ -361,14 +483,14 @@
 						if(!$resultmek1){
 							die("Could not connect to the database : <br/>". $db->connect_error);
 						}
-						while ($row = $resultmek1->fetch_object()){ 
-							$mid1 = $row->id_mekanik; 
-							$mname = $row->nama_mekanik; 
-							echo '<option value='.$mid1.' '; 
+						while ($row = $resultmek1->fetch_object()){
+							$mid1 = $row->id_mekanik;
+							$mname = $row->nama_mekanik;
+							echo '<option value='.$mid1.' ';
 							if(isset($mekanik1) && $mekanik1==$mid1)
 							echo 'selected="true"';
 							echo '>'.$mname.'<br/></option>';
-						} 
+						}
 					?></select>
 				</td>
 				<td valign="top"><span class="error">&nbsp;&nbsp;* <?php if(!empty($error_1)) echo $error_1; ?></span></td>
@@ -385,14 +507,14 @@
 						if(!$resultmek2){
 							die("Could not connect to the database : <br/>". $db->connect_error);
 						}
-						while ($row = $resultmek2->fetch_object()){ 
-							$mid2 = $row->id_mekanik; 
-							$mname2 = $row->nama_mekanik; 
-							echo '<option value='.$mid2.' '; 
+						while ($row = $resultmek2->fetch_object()){
+							$mid2 = $row->id_mekanik;
+							$mname2 = $row->nama_mekanik;
+							echo '<option value='.$mid2.' ';
 							if(isset($mekanik2) && $mekanik2==$mid2)
 							echo 'selected="true"';
 							echo '>'.$mname2.'<br/></option>';
-						} 
+						}
 					?></select>
 				</td>
 				<td valign="top"><span class="error">&nbsp;&nbsp;* <?php if(!empty($error_2)) echo $error_2; ?></span></td>
@@ -410,17 +532,17 @@
 							die("Could not connect to the database : <br/>". $db->connect_error);
 						}
 						// echo "string";
-						while ($row = $resultmek3->fetch_object()){ 
-							$mid3 = $row->id_mekanik; 
-							$mname3 = $row->nama_mekanik; 
-							echo '<option value='.$mid3.' '; 
+						while ($row = $resultmek3->fetch_object()){
+							$mid3 = $row->id_mekanik;
+							$mname3 = $row->nama_mekanik;
+							echo '<option value='.$mid3.' ';
 							if(isset($mekanik3) && $mekanik3==$mid3)
 							echo 'selected="true"';
 							echo '>'.$mname3.'<br/></option>';
-						} 
+						}
 					?></select>
 				</td>
-				
+
 			</tr>
 			<tr><td><br></td></tr>
 			<tr>
@@ -434,23 +556,23 @@
 						if(!$resultmek4){
 							die("Could not connect to the database : <br/>". $db->connect_error);
 						}
-						while ($row = $resultmek4->fetch_object()){ 
-							$mid4 = $row->id_mekanik; 
-							$mname4 = $row->nama_mekanik; 
-							echo '<option value='.$mid4.' '; 
+						while ($row = $resultmek4->fetch_object()){
+							$mid4 = $row->id_mekanik;
+							$mname4 = $row->nama_mekanik;
+							echo '<option value='.$mid4.' ';
 							if(isset($mekanik4) && $mekanik4==$mid4)
 							echo 'selected="true"';
 							echo '>'.$mname4.'<br/></option>';
 						}
 					?></select>
 				</td>
-				
+
 			</tr>
 			<tr><td><br></td></tr>
 			<tr>
 				<td valign="top">Deskripsi</td>
 				<td valign="top">:</td>
-				<td valign="top"><textarea name="deskripsi" rows="5" cols="30" maxlength="255" 
+				<td valign="top"><textarea name="deskripsi" rows="5" cols="30" maxlength="255"
 				placeholder="Masukkan deskripsi (maximal 255 karakter)" required> <?php echo $deskripsi; ?> </textarea></td>
 				<td valign="top"><span class="error">&nbsp;&nbsp;*<?php if(!empty($error_deskripsi)) echo $error_deskripsi; ?></span></td>
 			</tr>

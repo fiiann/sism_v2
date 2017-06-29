@@ -24,7 +24,7 @@
 	$row=$result->fetch_object();
 	$jml_track=$row->counter;
 
-<<<<<<< HEAD
+
 	$query="SELECT count(mekanik1) as counter FROM work_order WHERE id_section='3'";
 	$result = $con->query($query);
 	$row=$result->fetch_object();
@@ -35,8 +35,7 @@
 	$row=$result->fetch_object();
 	$jml_crusher=$row->counter;
 
-=======
->>>>>>> b5ce0f958d9603a8af66bb71ab8b3656b6b8c56a
+
 	$query="SELECT count(no) as counter FROM work_order";
 	$result = $con->query($query);
 	$row=$result->fetch_object();
@@ -90,11 +89,11 @@
 							</span>
 							<div class="text-box" >
 								<div class="main-text"> <?php echo $jml_wo ?></div>
-<<<<<<< HEAD
+
 								<div class="text-muted">Jumlah <?php if($status=='anggota') echo 'Total Denda Anda'; else echo ' Work Order '; ?></div>
-=======
-								<div class="text-muted">Jumlah<?php if($status=='anggota') echo 'Total Denda Anda'; else echo ' Work Order '; ?></div>
->>>>>>> b5ce0f958d9603a8af66bb71ab8b3656b6b8c56a
+
+								<!-- <div class="text-muted">Jumlah<?php if($status=='anggota') echo 'Total Denda Anda'; else echo ' Work Order '; ?></div> -->
+
 							</div>
 						 </div>
 					</div>
@@ -104,13 +103,13 @@
 									<i class="fa fa-users"></i>
 								</span>
 								<div class="text-box" >
-<<<<<<< HEAD
+
 									<div class="main-text"> <?php echo $jml_sse ?></div>
 									<div class="text-muted">Jumlah <?php if($status=='anggota') echo 'Total Denda Anda'; else echo 'WO Oleh SSE '; ?></div>
-=======
-									<div class="main-text"> <?php echo $jml_wo ?></div>
-									<div class="text-muted">Jumlah<?php if($status=='anggota') echo 'Total Denda Anda'; else echo ' Oleh SSe '; ?></div>
->>>>>>> b5ce0f958d9603a8af66bb71ab8b3656b6b8c56a
+
+									<!-- <div class="main-text"> <?php echo $jml_wo ?></div>
+									<div class="text-muted">Jumlah<?php if($status=='anggota') echo 'Total Denda Anda'; else echo ' Oleh SSe '; ?></div> -->
+
 								</div>
 	 					</div>
 					</div>
@@ -120,13 +119,13 @@
 									<i class="fa fa-users"></i>
 								</span>
 								<div class="text-box" >
-<<<<<<< HEAD
+
 									<div class="main-text"> <?php echo $jml_crusher ?></div>
 									<div class="text-muted">Jumlah <?php if($status=='anggota') echo 'Total Denda Anda'; else echo 'WO Oleh Crusher '; ?></div>
-=======
+<!--
 									<div class="main-text"> <?php echo $jml_wo ?></div>
-									<div class="text-muted">Jumlah<?php if($status=='anggota') echo 'Total Denda Anda'; else echo ' Oleh Crusher '; ?></div>
->>>>>>> b5ce0f958d9603a8af66bb71ab8b3656b6b8c56a
+									<div class="text-muted">Jumlah<?php if($status=='anggota') echo 'Total Denda Anda'; else echo ' Oleh Crusher '; ?></div> -->
+
 								</div>
 	 					</div>
 					</div>
